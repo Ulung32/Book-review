@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['prefix'=> 'v1', 'namespace' => 'App\Http\Controllers\API\v1'], function () {
+    Route::apiResource("book", BookController::class);
+    Route::apiResource("review", ReviewController::class);
+});

@@ -1,21 +1,49 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\v1;
 
+use App\Filters\v1\ReviewFilter;
+use App\Http\Resources\v1\Review\ReviewCollection;
+use App\Http\Resources\v1\Review\ReviewResource;
 use App\Models\Review;
 use App\Http\Requests\StoreReviewRequest;
 use App\Http\Requests\UpdateReviewRequest;
+use Illuminate\Validation\ValidationException;
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+    private ReviewFilter $reviewFilter;
+
+    public function __construct(ReviewFilter $reviewFilter){
+        $this->reviewFilter = $reviewFilter;
+    }
+    
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'userId' => 'numeric|nullable',
+                'bookId' => 'numeric|nullable',
+                'minRating' => 'numeric|nullable|min:0|max:10',
+            ]);
+    
+        } catch (ValidationException $e) {
+            return response()->json([
+                'error' => 'Validation failed',
+                'messages' => $e->validator->errors()
+            ], 422);
+        }
+
+        $this->reviewFilter->setQuery(Review::query());
+        $reviews = $this->reviewFilter->filter($request)->paginate();
+        return new ReviewCollection($reviews->appends($request->query()));
     }
 
     /**
@@ -47,7 +75,7 @@ class ReviewController extends Controller
      */
     public function show(Review $review)
     {
-        //
+        return new ReviewResource($review);
     }
 
     /**
