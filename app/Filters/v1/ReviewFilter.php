@@ -6,6 +6,10 @@ use App\Filters\BaseFilter;
 use App\Models\Review;
 
 class ReviewFilter extends BaseFilter{
+    /**
+    * set attributes for this class
+    *
+    */
     public function __construct(){
         $this->safeParameters = [
             'userId' => '=',

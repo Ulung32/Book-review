@@ -6,6 +6,10 @@ use App\Models\Book;
 use App\Filters\BaseFilter;
 
 class BookFilter extends BaseFilter {
+    /**
+    * set attributes for this class
+    *
+    */
     public function __construct(){
         $this->safeParameters = [
             'author' => 'like',

@@ -3,19 +3,40 @@
 namespace App\Filters;
 
 use Illuminate\Database\Eloquent\Builder;
-use illuminate\Http\Request;
+use Illuminate\Http\Request;
 
 class BaseFilter {
+    /**
+    * @var array
+    */
     protected $safeParameters = [];
 
+    /**
+    * @var array
+    */
     protected $columnMap = [];
 
+    /**
+    * @var Illuminate\Database\Eloquent\Builder
+    */
     protected Builder $query;
 
+    /**
+    * set query builder for this class
+    *
+    * @param Illuminate\Database\Eloquent\Builder $query
+    * @return void
+    */
     public function setQuery(Builder $query){
         $this->query = $query;
     }
 
+    /**
+    * mapping url query into Eloquent ORM query builder
+    *
+    * @param Illuminate\Http\Request $request
+    * @return Illuminate\Database\Eloquent\Builder
+    */
     public function filter(Request $request){
         $eloQuery = $this->query;
         
@@ -33,5 +54,4 @@ class BaseFilter {
 
         return $eloQuery;
     }
-
 }
