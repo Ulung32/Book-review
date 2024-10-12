@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\v1\Book;
 
+use App\Http\Resources\v1\Review\ReviewResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class BookResource extends JsonResource
@@ -21,6 +22,7 @@ class BookResource extends JsonResource
             "sumary" => $this->sumary,
             "rating" => $this->rating,
             "reviewCount" => $this->reviewCount,
+            "reviews" => ReviewResource::collection($this->whenLoaded("reviews")),
         ];
     }
 }

@@ -20,7 +20,7 @@ class BookController extends Controller
     {
         $this->bookFilter = $bookFilter;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -42,9 +42,16 @@ class BookController extends Controller
             ], 422);
         }
         
+        $includeReviews = $request->query('includeReviews');
+
         $this->bookFilter->setQuery(Book::query());
-        $books = $this->bookFilter->filter($request)->paginate();
-        return new BookCollection($books->appends($request->query()));
+        $books = $this->bookFilter->filter($request);
+
+        if ($includeReviews) {
+            $books = $books->with('reviews');
+        }
+
+        return new BookCollection($books->paginate()->appends($request->query()));
     }
 
     /**
@@ -76,6 +83,12 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
+        $includeReviews = request()->query('includeReviews');
+        
+        if ($includeReviews) {
+            return new BookResource($book->loadMissing('reviews'));
+        }
+
         return new BookResource($book);
     }
 
