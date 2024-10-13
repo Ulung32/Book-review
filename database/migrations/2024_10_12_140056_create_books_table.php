@@ -19,7 +19,7 @@ class CreateBooksTable extends Migration
             $table->string('author');
             $table->text('sumary');
             $table->float('rating')->nullable();
-            $table->integer('reviewCount');
+            $table->integer('reviewCount')->default(0);
             $table->timestamps();
         });
     }

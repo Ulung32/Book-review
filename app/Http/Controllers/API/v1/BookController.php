@@ -72,7 +72,7 @@ class BookController extends Controller
      */
     public function store(StoreBookRequest $request)
     {
-        //
+        return new BookResource(Book::create($request->all()));
     }
 
     /**

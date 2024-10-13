@@ -64,7 +64,7 @@ class ReviewController extends Controller
      */
     public function store(StoreReviewRequest $request)
     {
-        //
+        return new ReviewResource(Review::create($request->all()));
     }
 
     /**
