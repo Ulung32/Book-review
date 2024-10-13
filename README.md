@@ -1,61 +1,107 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Book Review API
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Book Review API adalah aplikasi berbasis RESTful API yang memungkinkan pengguna untuk melakukan operasi CRUD (Create, Read, Update, Delete) pada buku dan ulasan. Aplikasi ini menggunakan Laravel sebagai framework backend dan **Sanctum** untuk autentikasi berbasis token.
 
-## About Laravel
+## Fitur Utama
+- **Manajemen Buku**: Pengguna dapat melihat daftar buku dan detail buku. Hanya admin yang bisa menambah, mengubah, dan menghapus buku.
+- **Manajemen Ulasan**: Pengguna yang sudah login dapat membuat, mengubah, dan menghapus ulasan untuk buku yang mereka baca.
+- **Autentikasi**: Menggunakan Laravel Sanctum untuk login, register, dan manajemen token.
+- **Role-based Access Control**: Hanya admin yang memiliki akses untuk operasi pada buku, sementara pengguna biasa hanya dapat mengakses fitur ulasan.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Dependency
+Proyek ini menggunakan beberapa dependency penting yang perlu diperhatikan:
+- **PHP** >= 8.0
+- **Laravel** >= 8.x
+- **MySQL** atau **MariaDB** sebagai database
+- **Laravel Sanctum** untuk autentikasi token
+- **Composer** untuk manajemen dependency
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Instalasi
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Prasyarat
+Sebelum memulai, pastikan Anda sudah menginstal beberapa hal berikut:
+- **PHP** versi 8.0 atau lebih baru
+- **Composer** (https://getcomposer.org/)
+- **MySQL** atau **MariaDB**
 
-## Learning Laravel
+### Langkah Instalasi
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+1. **Clone repository**:
+    ```bash
+    git clone https://github.com/Ulung32/Book-review
+    cd book-review
+    ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Install dependencies**:
+    ```bash
+    composer install
+    ```
 
-## Laravel Sponsors
+3. **Salin file `.env.example` menjadi `.env`**:
+    ```bash
+    cp .env.example .env
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+4. **Generate aplikasi key**:
+    ```bash
+    php artisan key:generate
+    ```
 
-### Premium Partners
+5. **Konfigurasi environment**: Buka file `.env` dan masukkan informasi database Anda:
+    ```dotenv
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nama_database
+    DB_USERNAME=username_database
+    DB_PASSWORD=password_database
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[OP.GG](https://op.gg)**
+    ADMIN_EMAIL=admin@gmail.com
+    ADMIN_PASSWORD=admin
+    ```
 
-## Contributing
+6. **Migrasi dan Seed database**:
+    ```bash
+    php artisan migrate --seed
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+7. **Install Sanctum**:
+    ```bash
+    php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+    php artisan migrate
+    ```
 
-## Code of Conduct
+8. **Jalankan server lokal**:
+    ```bash
+    php artisan serve
+    ```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+9. **Pengujian API**:
+    Anda dapat menguji API menggunakan tools seperti **Postman** atau **Insomnia**. 
 
-## Security Vulnerabilities
+    - **Register**: `POST /api/v1/register`
+    - **Login**: `POST /api/v1/login`
+    - **Get Buku**: `GET /api/v1/book`
+    - **Get Ulasan**: `GET /api/v1/review`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+    Pastikan untuk menyertakan token pada endpoint yang memerlukan autentikasi.
 
-## License
+## Struktur API
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Books
+- **GET** `/api/v1/book`: Mengambil daftar semua buku (publik).
+- **GET** `/api/v1/book/{id}`: Mengambil detail buku berdasarkan ID (publik).
+- **POST** `/api/v1/book`: Menambahkan buku baru (hanya admin).
+- **PUT** `/api/v1/book/{id}`: Mengubah buku berdasarkan ID (hanya admin).
+- **DELETE** `/api/v1/book/{id}`: Menghapus buku berdasarkan ID (hanya admin).
+
+### Reviews
+- **GET** `/api/v1/review`: Mengambil daftar ulasan (publik).
+- **POST** `/api/v1/review`: Menambahkan ulasan baru (hanya pengguna terautentikasi).
+- **PUT** `/api/v1/review/{id}`: Mengubah ulasan berdasarkan ID (hanya pengguna terautentikasi yang membuat ulasan).
+- **DELETE** `/api/v1/review/{id}`: Menghapus ulasan berdasarkan ID (hanya pengguna terautentikasi yang membuat ulasan).
+
+## Manajemen User dan Role
+Dalam proyek ini, terdapat dua jenis pengguna:
+1. **Admin**: Dapat membuat, mengubah, dan menghapus buku serta ulasan.
+2. **User Biasa**: Dapat membuat, mengubah, dan menghapus ulasan, tetapi hanya dapat melihat buku.
