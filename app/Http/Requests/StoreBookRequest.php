@@ -31,4 +31,13 @@ class StoreBookRequest extends FormRequest
             'sumary' => ['required','string'],
         ];
     }
+    
+    protected function prepareForValidation()
+    {
+        // Remove rating and review_count from the request data before validation
+        $this->merge([
+            'rating' => null,
+            'review_count' => 0,
+        ]);
+    }
 }

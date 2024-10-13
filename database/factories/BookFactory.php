@@ -21,7 +21,7 @@ class BookFactory extends Factory
             'author' => $this->faker->name,
             'sumary' => $this->faker->paragraph,
             'rating' => null,  
-            'reviewCount' => 0,
+            'review_count' => 0,
         ];
     }
 
@@ -47,7 +47,7 @@ class BookFactory extends Factory
 
             $book->update([
                 'rating' => $averageRating,
-                'reviewCount' => $reviewCount,
+                'review_count' => $reviewCount,
             ]);
         });
     }

@@ -113,6 +113,10 @@ class BookController extends Controller
     public function update(UpdateBookRequest $request, Book $book)
     {
         $book->update($request->all());
+        return response()->json([
+            'message' => 'Book Updated Successfully',
+            'data' => new BookResource($book),
+        ], 200);
     }
 
     /**
@@ -123,6 +127,9 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        //
+        $book->delete();
+        return response()->json([
+            'message' => 'Book deleted Successfully',
+        ], 200);
     }
 }
