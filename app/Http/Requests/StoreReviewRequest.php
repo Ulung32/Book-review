@@ -29,6 +29,7 @@ class StoreReviewRequest extends FormRequest
         return [
             'book_id' => ['required', 'exists:books,id'], 
             'rating' => ['required', 'numeric', 'min:1', 'max:10'],
+            'review' => ['sometimes', 'string'],
             'user_id' => [
             'required', 
             'exists:users,id', 
