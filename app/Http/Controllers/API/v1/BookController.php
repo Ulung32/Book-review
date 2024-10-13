@@ -128,9 +128,17 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        $book->delete();
-        return response()->json([
-            'message' => 'Book deleted Successfully',
-        ], 200);
+        $user = auth()->user();
+
+        if($user != null && $user->tokenCan('books.delete')) {
+            $book->delete();
+            return response()->json([
+                'message' => 'Book deleted Successfully',
+            ], 200);
+        }else{
+            return response()->json([
+                'message'=> 'unauthorize',
+            ], 401);
+        }
     }
 }

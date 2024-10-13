@@ -174,6 +174,14 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
+        $user = auth()->user();
+
+        if($user == null || $user->id != $review->user_id) {
+            return response()->json([
+                'message'=> 'unauthorize',
+            ], 401);
+        }
+
         DB::beginTransaction();
 
         try {
