@@ -38,7 +38,7 @@ class StoreBookRequest extends FormRequest
     {
         // Remove rating and review_count from the request data before validation
         $this->merge([
-            'rating' => null,
+            'rating' => 0,
             'review_count' => 0,
         ]);
     }
