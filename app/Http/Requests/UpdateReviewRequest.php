@@ -13,7 +13,11 @@ class UpdateReviewRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+        $review = $this->route('review'); 
+
+        // Check if the authenticated user is the owner of the review
+        return $user != null && $user->id === $review->user_id && $user->tokenCan('reviews.update');
     }
 
     /**

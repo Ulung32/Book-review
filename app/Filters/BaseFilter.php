@@ -17,14 +17,14 @@ class BaseFilter {
     protected $columnMap = [];
 
     /**
-    * @var Illuminate\Database\Eloquent\Builder
+    * @var \Illuminate\Database\Eloquent\Builder
     */
     protected Builder $query;
 
     /**
     * set query builder for this class
     *
-    * @param Illuminate\Database\Eloquent\Builder $query
+    * @param \Illuminate\Database\Eloquent\Builder $query
     * @return void
     */
     public function setQuery(Builder $query){

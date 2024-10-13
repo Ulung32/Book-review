@@ -16,7 +16,9 @@ class StoreReviewRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+
+        return $user != null && $user->tokenCan('reviews.create');
     }
 
     /**
@@ -54,7 +56,7 @@ class StoreReviewRequest extends FormRequest
     {
         $this->merge([
             'book_id' => $this->bookId,
-            'user_id' => $this->userId,
+            'user_id' => auth()->id(),
         ]);
     }
 }

@@ -13,7 +13,9 @@ class UpdateBookRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+
+        return $user != null && $user->tokenCan('books.update');
     }
 
     /**

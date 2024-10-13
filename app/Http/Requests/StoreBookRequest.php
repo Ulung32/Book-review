@@ -15,7 +15,9 @@ class StoreBookRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        $user = auth()->user();
+
+        return $user != null && $user->tokenCan('books.create');
     }
 
     /**
@@ -31,7 +33,7 @@ class StoreBookRequest extends FormRequest
             'sumary' => ['required','string'],
         ];
     }
-    
+
     protected function prepareForValidation()
     {
         // Remove rating and review_count from the request data before validation
